@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 data_dir = "neurocon"
 
 #output folder
-output_dir = "sliced_mri_dataset"
+output_dir = "10_sliced_mri_dataset"
 # os.makedirs(output_dir,  exist_ok=True)
 os.makedirs(output_dir+'/control', exist_ok=True)
 os.makedirs(output_dir+'/parkinson', exist_ok=True)
@@ -28,7 +28,7 @@ for folder in folders:
 print("\nControl Folders:"+str(len(control_folders)))
 print("Patient Folders:"+str(len(patient_folders))+"\n")
 
-num_slices = 5
+num_slices = 10
 
 for folder in control_folders:
 
@@ -48,7 +48,7 @@ for folder in control_folders:
 
             mid_slice = img_data.shape[2] // 2
 
-            for i in range(-(num_slices//2),(num_slices//2)+1):
+            for i in range(-(num_slices//2),(num_slices//2)if (num_slices%2==0) else (num_slices//2)+1):
 
                 slice_data = np.squeeze(img_data[:, :, mid_slice+i])
                 slice_data = (slice_data - np.min(slice_data)) / (np.max(slice_data) - np.min(slice_data)) * 255 #normalize
@@ -77,7 +77,7 @@ for folder in patient_folders:
 
             mid_slice = img_data.shape[2] // 2
 
-            for i in range(-2,3):
+            for i in range(-(num_slices//2),(num_slices//2)if (num_slices%2==0) else (num_slices//2)+1):
                 
                 slice_data = np.squeeze(img_data[:, :, mid_slice+i])
                 slice_data = (slice_data - np.min(slice_data)) / (np.max(slice_data) - np.min(slice_data)) * 255 #normalize
